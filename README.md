@@ -33,7 +33,7 @@ my-app/
 
 
 ### Landing Page
-![](public/mocks/Site Map.png)
+![](public/mocks/Feed.png)
 - - -
 ### Splash Page
 ![](public/mocks/Splash Page Navigation.png)
