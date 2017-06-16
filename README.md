@@ -30,14 +30,22 @@ my-app/
 ```
 
 ## Project Mockups
-
-### Site Map
-![](public/mocks/Site%Map.png
-
+### Site Layout
+![](public/mocks/SiteMap.png)
+- - -
 ### Landing Page
+![](public/mocks/SplashPageNavigation.png)
+- - -
+### Project Feed / Home Page
 ![](public/mocks/Feed.png)
 - - -
-### Splash Page
-![](public/mocks/Splash Page Navigation.png)
+### Blog
+![](public/mocks/Blog.png)
+- - -
+### Project Post Example
+![](public/mocks/ProjectPostExample.png)
+- - -
+### Blog Post Example
+![](public/mocks/BlogPostExample.png)
 
 
