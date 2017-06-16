@@ -32,7 +32,7 @@ my-app/
 ## Project Mockups
 
 ### Site Map
-![](public/mocks/Site \Map.png
+![](public/mocks/Site%Map.png
 
 ### Landing Page
 ![](public/mocks/Feed.png)
