@@ -30,7 +30,6 @@ my-app/
 ```
 
 ## Project Mockups
-
 ### Site Layout
 ![](public/mocks/SiteMap.png)
 - - -
