@@ -34,8 +34,6 @@ class Root extends React.Component{
 		  // ...
 		});
 	}
-	//TODO get figure out where to store popup code for GitHubOauth through firebase
-	// Pass Database object to 
 	render(){
 		return(
 			<BrowserRouter>
