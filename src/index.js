@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import {db, firebaseAuth} from './database';
 
+/*
+	TODO
+		 - Move login Popup to login route
+		 - define what is needed for Project model
+		 - change what is viewed depending if logged in or not
+		  - set fields for default template.
+*/
 
 import App from './components/App';
 import ProjectFeed from './components/ProjectFeed';
@@ -13,7 +20,15 @@ class Root extends React.Component{
 		super()
 		//This binding is necesary to make `this` work
 		//this.database = database.bind(this);
-		this.state={}
+		this.state={
+			user:null
+		}
+	}
+	componentWillMount(){
+		//code to create auth listener and update state
+		firebaseAuth().onAuthStateChanged( user => {
+		  this.setState({user});
+		});
 	}
 	componentDidMount(){
 		var provider = new firebaseAuth.GithubAuthProvider();

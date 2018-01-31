@@ -19,8 +19,6 @@ class ProjectFeed extends React.Component{
         })
 		})
 	}
-	//To Do
-	//Add code to display everything project in db
 	//make sure to always return only one root node
 	//include a 'key' if using map to list mulitple items
 	render(){
