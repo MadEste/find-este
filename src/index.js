@@ -5,7 +5,7 @@ import {db, firebaseAuth} from './database';
 
 /*
 	TODO
-		 - Move login Popup to login route
+		 - setup redirect on gitPopUp and logout
 		 - define what is needed for Project model
 		 - change what is viewed depending if logged in or not
 		  - set fields for default template.
@@ -18,27 +18,29 @@ import LogIn from './components/LogIn';
 class Root extends React.Component{
 	constructor(){
 		super()
-		//This binding is necesary to make `this` work
-		//this.database = database.bind(this);
+		//This binding is necesary to make `this` work in the call back
+		this.gitPopUp = this.gitPopUp.bind(this);
+		this.gitLogOut = this.gitLogOut.bind(this);
 		this.state={
 			user:null
 		}
 	}
 	componentWillMount(){
-		//code to create auth listener and update state
+		// eventListener to create auth listener and update state
 		firebaseAuth().onAuthStateChanged( user => {
 		  this.setState({user});
 		});
 	}
-	componentDidMount(){
-		var provider = new firebaseAuth.GithubAuthProvider();
-		firebaseAuth().signInWithPopup(provider).then(function(result) {
+	gitPopUp(history){
+		let provider = new firebaseAuth.GithubAuthProvider();
+		firebaseAuth().signInWithPopup(provider).then( (result) => {
 		  // This gives you a GitHub Access Token. You can use it to access the GitHub API.
 		  var token = result.credential.accessToken;
 		  // The signed-in user info.
 		  var user = result.user;
-		  // ...
-		}).catch(function(error) {
+		  // ...ADD REDIRECT
+		  history.push('/');
+		}).catch( error => {
 		  // Handle Errors here.
 		  var errorCode = error.code;
 		  var errorMessage = error.message;
@@ -49,13 +51,25 @@ class Root extends React.Component{
 		  // ...
 		});
 	}
+	gitLogOut(history){
+		firebaseAuth().signOut().then( () => {
+		  // Sign-out successful.
+		  // ADD REDIRECT
+		  history.push('/');
+		}).catch(function(error) {
+		  // An error happened.
+		  console.log(error);
+		});
+	}
 	render(){
 		return(
 			<BrowserRouter>
 				<App>
 					<Switch>
 						<Route exact path='/' component={ProjectFeed}/>
-						<Route exact path='/login' component={LogIn}/>
+						<Route exact path='/login' render={ ({history}) => {
+							return <LogIn history={history} gitPopUp={this.gitPopUp} gitLogOut={this.gitLogOut} user={this.state.user}/>;
+						}}/>
 					</Switch>
 				</App>
 			</BrowserRouter>
