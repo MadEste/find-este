@@ -1,0 +1,19 @@
+/*Creates vertical line in page*/
+.v1 {
+  border-left: 3px solid blue;
+  height: 65%;
+  position: absolute;
+  left: 50%;
+  margin-left: 0px;
+  top: 30%;
+}
+
+.img-left {
+	float:left;
+}
+.img-right {
+	float:right;
+}
+.splashContainer {
+	width:100%;
+}
