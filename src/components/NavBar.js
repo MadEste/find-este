@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './css/NavBar.css';
 
 class NavBar extends Component {
-	constructor(){
-		super();
-	}
+  
   render() {
   	//TODO Add links to images and src
   	return(

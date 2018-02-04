@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './css/Splash.css';
 
 class Splash extends Component {
@@ -20,6 +22,12 @@ class Splash extends Component {
   	</div>
   	);
   }
+}
+
+//proptype validation
+Splash.propTypes = {
+  //expects function
+  updateVisit:   PropTypes.func.isRequired
 }
 
 export default Splash;

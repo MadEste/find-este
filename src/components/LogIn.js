@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class LogIn extends Component {
 	constructor(){
@@ -15,7 +16,6 @@ class LogIn extends Component {
 		this.props.gitLogOut(this.props.history);//pass history prop
 	}
   render() {
-  	console.log(this.props);
   	//have if statement to display different layouts dependong on state of user
   	if(this.props.user){
   		//user is logged in
@@ -39,6 +39,27 @@ class LogIn extends Component {
 	    );
   	}
   }
+}
+
+//proptype validation
+LogIn.propTypes = {
+	//custom user validator
+	user: (props, propName, componentName) => {
+	  const user = props[propName];
+	  let error = null;
+	  //User must be passed, even if it is null
+	  if(typeof user === 'undefined'){
+	    error = new Error('`' + componentName + '` prop `' +propName+ '` is Required.');
+	  //user must be an object or null and cannot be an array
+	  }else if(typeof user !== 'object' || Array.isArray(user)){
+	    error = new Error('`' + componentName + '` prop `' +propName+ '` should be of type `Object`.');
+	  }
+	  return error;
+	},
+	//Login/Out functions passed
+	gitPopUp: 	PropTypes.func.isRequired,
+	gitLogOut: 	PropTypes.func.isRequired,
+	history: 		PropTypes.object.isRequired
 }
 
 export default LogIn;
