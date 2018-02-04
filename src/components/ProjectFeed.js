@@ -1,11 +1,12 @@
 import React from 'react';
 import {db} from '../database';
+import PropTypes from 'prop-types';
 
 class ProjectFeed extends React.Component{
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state={
-			projects:{}
+			projects:{},
 		}
 	}
 	componentWillMount(){
@@ -14,18 +15,20 @@ class ProjectFeed extends React.Component{
 			//call datasnapshot and pass into state.
 			let data = snapshot.val();
 			this.setState({
-          //update the state from the new array
-          projects: data
-        })
+        //update the state from the new array
+        projects: data
+      })
 		})
 	}
 	//make sure to always return only one root node
 	//include a 'key' if using map to list mulitple items
 	render(){
 		let projects = this.state.projects;
+		let canEdit = this.props.canEdit;
 		return(
 			<div>
 				<h1>This is the Project Feed</h1>
+				{canEdit && <p>New Linkto goes here!</p>}
 				<div className="projects">
 				  {Object.keys(projects).map((key) => {
 				    let project = projects[key]
@@ -40,6 +43,12 @@ class ProjectFeed extends React.Component{
 			</div>
 		);
 	}
+}
+
+//proptype validation
+ProjectFeed.propTypes = {
+	//can Edit Proptype bool
+	canEdit: PropTypes.bool.isRequired
 }
 
 export default ProjectFeed;

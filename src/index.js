@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import {firebaseAuth} from './database';
+import {firebaseAuth,admins} from './database';
 
 /*
 	TODO
-		- Start DEFINING PROPTYPES IN COMPONENTS
 		 - define what is needed for Project model
 		 - change what is viewed depending if logged in or not
 		  - set fields for default template.
@@ -25,13 +24,20 @@ class Root extends React.Component{
 		this.updateVisit = this.updateVisit.bind(this);
 		this.state={
 			user:null,
-			iVisit:true
+			iVisit:true,
+			canEdit:false
 		}
 	}
 	componentWillMount(){
 		// eventListener to create auth listener and update state
 		firebaseAuth().onAuthStateChanged( user => {
-		  this.setState({user});
+		  let canEdit = false;
+		  //if logged in is admin then let edit otherwise dont.
+		  if(user && admins.includes(user.uid) ){
+		  	//update state to be editable
+		  	canEdit = true;
+		  }
+		  this.setState({user,canEdit});
 		});
 		//Check Local Storage for inital visits
 		try{
@@ -98,12 +104,13 @@ class Root extends React.Component{
 							if(this.state.iVisit){
 								return(<Splash updateVisit={this.updateVisit}/>);
 							}else{
-								return(<ProjectFeed/>);
+								return(<ProjectFeed canEdit={this.state.canEdit}/>);
 							}
 						}}/>
 						<Route exact path='/login' render={ ({history}) => {
 							return <LogIn history={history} gitPopUp={this.gitPopUp} gitLogOut={this.gitLogOut} user={this.state.user}/>;
 						}}/>
+						<Route exact path='/newProject'/>
 					</Switch>
 				</App>
 			</BrowserRouter>
