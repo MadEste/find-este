@@ -10,7 +10,7 @@ class ProjectFeed extends React.Component{
 			projects:{},
 		}
 	}
-	componentWillMount(){
+	componentDidMount(){
 		//put code here to fetch from database
 		db.ref('/projFeed').once('value').then(snapshot=>{
 			//call datasnapshot and pass into state.

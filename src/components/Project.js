@@ -17,7 +17,7 @@ class Project extends React.Component{
 			author:''
 		}
 	}
-	componentWillMount(){
+	componentDidMount(){
 		console.log(this.props);
 		//put code here to fetch from database
 		db.ref('/projFeed').once('value').then(snapshot=>{
@@ -30,6 +30,7 @@ class Project extends React.Component{
 		})
 	}
 	handleChange(e) {
+		//updates state and form element, one function for all inputs using event target
 		console.log(e);
     const value = e.target.value;
     const name = e.target.name;
@@ -56,7 +57,9 @@ class Project extends React.Component{
 		        	ImageURL:
 		        	<input name='mainImg' type='text' value={this.state.mainImg} onChange={this.handleChange} />
 		        </label>
+		        <button></button>
 		      </form>
+
 		    );
 	}
 }

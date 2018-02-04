@@ -6,7 +6,6 @@ import {firebaseAuth,admins} from './database';
 /*
 	TODO
 		 - define what is needed for Project model
-		 - change what is viewed depending if logged in or not
 		  - set fields for default template.
 */
 
@@ -29,7 +28,7 @@ class Root extends React.Component{
 			canEdit:false
 		}
 	}
-	componentWillMount(){
+	componentDidMount(){
 		// eventListener to create auth listener and update state
 		firebaseAuth().onAuthStateChanged( user => {
 		  let canEdit = false;
