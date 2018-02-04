@@ -113,7 +113,7 @@ class Root extends React.Component{
 						}}/>
 						<Route path='/projects/edit/:projectID' render={ (props) => {
 							if(this.state.canEdit){
-								return(<Project projectID={props.match.params.projectID} canEdit={this.state.canEdit}/>);
+								return(<Project projectID={props.match.params.projectID} user={this.state.user} canEdit={this.state.canEdit}/>);
 							}else{
 								return(<Redirect to='/'/>);
 							}
