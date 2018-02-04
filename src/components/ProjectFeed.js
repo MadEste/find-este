@@ -37,6 +37,7 @@ class ProjectFeed extends React.Component{
 				    	<div key={key}>
 					      <h3>{project.title}</h3>
 					      <p>{project.text}</p>
+					      {canEdit && <Link to={`projects/edit/${key}`}>Edit</Link>}
 				      </div>
 				    )
 				  })}

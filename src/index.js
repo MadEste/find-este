@@ -5,8 +5,9 @@ import {firebaseAuth,admins} from './database';
 
 /*
 	TODO
-		 - define what is needed for Project model
+		 - SAVE and PUsh code for projects
 		  - set fields for default template.
+		  - ADD MESSAGE ALERTS ex FOR bad url redirect!
 */
 
 import App from './components/App';
@@ -110,9 +111,9 @@ class Root extends React.Component{
 						<Route exact path='/login' render={ ({history}) => {
 							return <LogIn history={history} gitPopUp={this.gitPopUp} gitLogOut={this.gitLogOut} user={this.state.user}/>;
 						}}/>
-						<Route path='/projects/edit/:projectID' render={ (props) => {
+						<Route path='/projects/edit/:projectID' render={ props => {
 							if(this.state.canEdit){
-								return(<Project projectID={props.match.params.projectID} user={this.state.user} canEdit={this.state.canEdit}/>);
+								return(<Project projectID={props.match.params.projectID} user={this.state.user} canEdit={this.state.canEdit} history={props.history}/>);
 							}else{
 								return(<Redirect to='/'/>);
 							}
