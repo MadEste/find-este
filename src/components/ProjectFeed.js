@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {db} from '../database';
 import PropTypes from 'prop-types';
 
@@ -28,7 +29,7 @@ class ProjectFeed extends React.Component{
 		return(
 			<div>
 				<h1>This is the Project Feed</h1>
-				{canEdit && <p>New Linkto goes here!</p>}
+				{canEdit && <Link to='/projects/edit/new'>Create New Project</Link>}
 				<div className="projects">
 				  {Object.keys(projects).map((key) => {
 				    let project = projects[key]

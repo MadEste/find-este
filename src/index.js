@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import {firebaseAuth,admins} from './database';
 
 /*
@@ -12,6 +12,7 @@ import {firebaseAuth,admins} from './database';
 
 import App from './components/App';
 import LogIn from './components/LogIn';
+import Project from './components/Project';
 import ProjectFeed from './components/ProjectFeed';
 import Splash from './components/Splash';
 
@@ -110,7 +111,13 @@ class Root extends React.Component{
 						<Route exact path='/login' render={ ({history}) => {
 							return <LogIn history={history} gitPopUp={this.gitPopUp} gitLogOut={this.gitLogOut} user={this.state.user}/>;
 						}}/>
-						<Route exact path='/newProject'/>
+						<Route path='/projects/edit/:projectID' render={ (props) => {
+							if(this.state.canEdit){
+								return(<Project projectID={props.match.params.projectID} canEdit={this.state.canEdit}/>);
+							}else{
+								return(<Redirect to='/'/>);
+							}
+						}}/>
 					</Switch>
 				</App>
 			</BrowserRouter>
