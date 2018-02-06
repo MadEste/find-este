@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class LogIn extends Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.logIn = this.logIn.bind(this);
 		this.logOut = this.logOut.bind(this);
 	}

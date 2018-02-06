@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Switch, Route, hashHistory, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import {firebaseAuth,admins} from './database';
 
 /*
@@ -31,8 +31,36 @@ class Root extends React.Component{
 			canEdit:false
 		}
 	}
+	componentWillMount(){
+		//Session storage is synchronus so can be called before mount
+		//User and can edit are based on session storage, iVisit saved to local storage
+		let user = null;
+		let canEdit = false;
+		let iVisit = true;
+		try{
+			let jsonUser = sessionStorage.getItem('user');
+			let jsonCanEdit = sessionStorage.getItem('canEdit');
+
+			if(jsonUser !== null){
+				user = JSON.parse(jsonUser);
+			}
+			if(jsonCanEdit !== null){
+				canEdit = JSON.parse(jsonCanEdit);
+			}
+		}catch(err){console.log(err);}
+		//Check Local Storage for inital visits
+		try{
+			let jsonVisited = localStorage.getItem('iVisit');
+			if(jsonVisited !== null){
+				//exists pull it into state
+				iVisit = JSON.parse(jsonVisited);
+			}
+		}catch(err){console.log(err);}
+		this.setState({user,iVisit,canEdit});
+	}
 	componentDidMount(){
 		// eventListener to create auth listener and update state
+		//firebase API is asynchronus so call after component mounted
 		firebaseAuth().onAuthStateChanged( user => {
 		  let canEdit = false;
 		  //if logged in is admin then let edit otherwise dont.
@@ -40,38 +68,24 @@ class Root extends React.Component{
 		  	//update state to be editable
 		  	canEdit = true;
 		  }
+		  //update localsession then update state
+		  try{
+		  	let jsonUser = JSON.stringify(user);
+		  	sessionStorage.setItem('user',jsonUser);
+		  	sessionStorage.setItem('canEdit',canEdit);
+		  }catch(err){console.log(err);}
 		  this.setState({user,canEdit});
 		});
-		//Check Local Storage for inital visits
-		try{
-			let jsonVisited = localStorage.getItem('iVisit');
-			if(jsonVisited !== null){
-				//exists pull it into state
-				let iVisit = JSON.parse(jsonVisited);
-				this.setState({iVisit});
-			}
-		}catch(err){
-      console.log(err);
-    }
 	}
 	gitPopUp(history){
 		let provider = new firebaseAuth.GithubAuthProvider();
 		firebaseAuth().signInWithPopup(provider).then( (result) => {
-		  // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-		  //var token = result.credential.accessToken;
-		  // The signed-in user info.
-		  //var user = result.user;
-		  // ...ADD REDIRECT
+			//Redirect to Root on login
 		  history.push('/');
 		}).catch( error => {
 		  // Handle Errors here.
 		  let errorCode = error.code;
 		  let errorMessage = error.message;
-		  // The email of the user's account used.
-		  //var email = error.email;
-		  // The firebase.auth.AuthCredential type that was used.
-		  //var credential = error.credential;
-		  // ...
 		  console.log(errorCode+" , "+errorMessage);
 		});
 	}
@@ -80,7 +94,7 @@ class Root extends React.Component{
 		  // Sign-out successful.
 		  // ADD REDIRECT
 		  history.push('/');
-		}).catch(function(error) {
+		}).catch( error => {
 		  // An error happened.
 		  console.log(error);
 		});

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import './css/Splash.css';
 
 class Splash extends Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.updateVisit = this.updateVisit.bind(this);
 	}
 	updateVisit(e){
