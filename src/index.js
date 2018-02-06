@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, hashHistory, Redirect} from 'react-router-dom'
 import {firebaseAuth,admins} from './database';
 
 /*
 	TODO
-		 - SAVE and PUsh code for projects
-		  - set fields for default template.
+			- change routing so it works with the browser too
+			 - accomplish this by using session storage
+	 		- ADD Delet with warning
 		  - ADD MESSAGE ALERTS ex FOR bad url redirect!
+		  - make some fields required on creation for project
 */
 
 import App from './components/App';

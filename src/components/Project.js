@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {db} from '../database';
+import {db, timeStamp} from '../database';
 import PropTypes from 'prop-types';
+//import firebase from "firebase";
 
 import './css/Project.css'
 
@@ -54,6 +55,21 @@ class Project extends React.Component{
   }
   save(e){
   	e.preventDefault();
+  	//if it is new then push otherwise update
+  	//use object spread to clone state
+  	let cloneState = {...this.state};
+  	if(this.props.projectID === 'new'){
+  		//this is a new project, use push
+  		cloneState.author = this.props.user.displayName;//add Author
+  		db.ref('/projFeed/').push({...cloneState,'created':timeStamp}).then(ref=>{
+  			this.props.history.push('/');
+  		})
+  	}else{
+  		//already exists, update an old project.
+  		db.ref(`/projFeed/${this.props.projectID}`).update({...cloneState,'edited':timeStamp}).then(()=>{
+  			this.props.history.push('/');
+  		});
+  	}
   }
 	render(){
 		return (
