@@ -134,6 +134,9 @@ class Root extends React.Component{
 								return(<Redirect to='/'/>);
 							}
 						}}/>
+						<Route path='/*' render={ () => {
+							return(<Redirect to='/'/>);//catch all redirect for bad routes
+						}}/>
 					</Switch>
 				</App>
 			</BrowserRouter>
